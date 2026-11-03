@@ -35,18 +35,18 @@ K=0.05 #min^-1
 Lamda=0.1 #min^-1
 Km=12.88 #mg L^-1
 Kmax=K * Km #mg L^-1 min^-1
-
+    
 
 #Condiciones iniciales
 C_0=0.5 #mg L^-1
 M_0=1 #mg
 S_0=0.5 #mg L^-1 min^-1
 C_iniciales=[C_0,M_0,S_0]
-C_inicialesbis=[0,-500,0]
-C_inicialesbis2=[15,-700,5]
-C_Inicialeseq2_0=[-30, 700, 1]
+C_inicialesbis=[30,-500,10]
+C_inicialesbis2=[15,-700,25]
+C_Inicialeseq2_0=[-40, 700, 1]
 C_Inicialeseq2_1=[-15, -399, 0]
-C_Inicialeseq2_2=[-30, -700, -18]
+C_Inicialeseq2_2=[-20, 1500, -18]
 u=0.2 #mg min^-2
 
 
@@ -150,7 +150,7 @@ ax.plot(
 
 ax.plot(
     sol5.y[0], sol5.y[1], sol5.y[2],
-    color='purple',
+    color='navy',
     label='Trayectoria 5 (CI=[-15, -399, 0])'
 )
 
@@ -162,7 +162,7 @@ ax.plot(
 
 # Punto inicial
 ax.scatter(
-    C_0, M_0, S_0,
+    C_iniciales[0],C_iniciales[1],C_iniciales[2],
     color='b',
     marker='o',
     s=50,
@@ -170,7 +170,7 @@ ax.scatter(
 )
 
 ax.scatter(
-    0,-500,0,
+    C_inicialesbis[0],C_inicialesbis[1],C_inicialesbis[2],
     color='g',
     marker='o',
     s=50,
@@ -178,7 +178,7 @@ ax.scatter(
 )
 
 ax.scatter(
-    15,-700,5,
+    C_inicialesbis2[0],C_inicialesbis2[1],C_inicialesbis2[2],
     color='r',
     marker='o',
     s=50,
@@ -186,7 +186,7 @@ ax.scatter(
 )
 
 ax.scatter(
-    -30,700,1,
+    C_Inicialeseq2_0[0],C_Inicialeseq2_0[1],C_Inicialeseq2_0[2],
     color='orchid',
     marker='o',
     s=50,
@@ -194,15 +194,15 @@ ax.scatter(
 )
 
 ax.scatter(
-    -15,-399,0,
-    color='purple',
+   C_Inicialeseq2_1[0],C_Inicialeseq2_1[1],C_Inicialeseq2_1[2],
+    color='navy',
     marker='o',
     s=50,
     label='Inicio 5'
 )
 
 ax.scatter(
-    -30,-700,-18,
+    C_Inicialeseq2_2[0],C_Inicialeseq2_2[1],C_Inicialeseq2_2[2],
     color='darkmagenta',
     marker='o',
     s=50,
