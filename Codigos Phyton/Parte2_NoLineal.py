@@ -10,6 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt 
 from scipy.integrate import solve_ivp
 from scipy.optimize import root
+from scipy.signal import TransferFunction, impulse, step
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 # ================================
 #           Grupo 8
@@ -401,6 +403,159 @@ fig.suptitle(
     fontsize=15
 )
 
+plt.tight_layout()
+plt.show()
+
+# ==========================================
+# Polos y ceros de la función de transferencia
+# Entrada: u(t) - Salida: C(t)
+# ==========================================
+
+# Coeficientes obtenidos del Jacobiano
+a = -A1[0, 0]
+lam = -A1[2, 2]
+
+# Función de transferencia G(s) = num(s)/den(s)
+numerador = np.array([A1[0, 2]])
+
+# Multiplicamos (s+a)*(s+lam)
+denominador = np.polymul([1, a], [1, lam])
+
+
+# Calculamos las raíces
+polos = np.roots(denominador)
+ceros = np.roots(numerador)
+
+print("\n=== POLOS Y CEROS ===")
+print("Numerador:", numerador)
+print("Denominador:", denominador)
+print("Polos:", polos)
+print("Ceros:", ceros)
+
+
+# ==========================================
+# Mapa de Polos y Ceros (Plano S)
+# con recuadro de zoom sobre los polos
+# ==========================================
+
+fig2, ax3 = plt.subplots(figsize=(8, 6))
+
+# Dibujamos el círculo unitario punteado al fondo (zorder=1)
+theta = np.linspace(0, 2 * np.pi, 200)
+ax3.plot(np.cos(theta), np.sin(theta), color='gray', linestyle='--',
+         label='Círculo unitario', zorder=1)
+
+# Dibujamos los ejes cartesianos al fondo (zorder=1)
+ax3.axhline(0, color='gray', linewidth=0.8, zorder=1)
+ax3.axvline(0, color='gray', linewidth=0.8, zorder=1)
+
+# Graficamos los Ceros adelante (zorder=2)
+if len(ceros) > 0:
+    ax3.scatter(np.real(ceros), np.imag(ceros),
+                s=80, facecolors='none',
+                edgecolors='blue', linewidth=2,
+                label='Ceros (o)', zorder=2)
+
+# Graficamos los Polos al frente de todo (zorder=3)
+if len(polos) > 0:
+    ax3.scatter(np.real(polos), np.imag(polos),
+                s=120, marker='x',
+                color='orange', linewidth=3,
+                label='Polos (x)', zorder=3)
+
+# Ajustes estéticos del gráfico principal
+ax3.set_title('Mapa de Polos y Ceros (Plano S)')
+ax3.set_xlabel(r'$\Re(s)$ (Parte Real)')
+ax3.set_ylabel(r'$\Im(s)$ (Parte Imaginaria)')
+ax3.grid(True, which='both', linestyle=':', alpha=0.6, zorder=1)
+
+# Relación de aspecto 1:1 para que el círculo no se vea ovalado
+ax3.axis('equal')
+ax3.set_xlim([-1.5, 1.5])
+ax3.set_ylim([-1.5, 1.5])
+ax3.legend(loc='upper left')
+
+
+# ==========================================
+# Recuadro de zoom sobre los polos
+# ==========================================
+
+# Creamos un inset (recuadro pequeño)
+axins = inset_axes(ax3, width="38%", height="38%", loc='lower right')
+
+# Mismo contenido en el inset
+axins.plot(np.cos(theta), np.sin(theta), color='gray', linestyle='--', zorder=1)
+axins.axhline(0, color='gray', linewidth=0.8, zorder=1)
+axins.axvline(0, color='gray', linewidth=0.8, zorder=1)
+
+if len(ceros) > 0:
+    axins.scatter(np.real(ceros), np.imag(ceros),
+                  s=80, facecolors='none',
+                  edgecolors='blue', linewidth=2, zorder=2)
+
+if len(polos) > 0:
+    axins.scatter(np.real(polos), np.imag(polos),
+                  s=120, marker='x',
+                  color='orange', linewidth=3, zorder=3)
+
+# Elegimos la región de zoom alrededor de los polos
+xmin = np.min(np.real(polos)) - 0.005
+xmax = np.max(np.real(polos)) + 0.005
+ymin = -0.01
+ymax = 0.01
+
+axins.set_xlim(xmin, xmax)
+axins.set_ylim(ymin, ymax)
+
+# Estética del recuadro
+axins.grid(True, linestyle=':', alpha=0.6)
+axins.set_title('Zoom polos', fontsize=9)
+
+
+plt.tight_layout()
+plt.show()
+
+# Respuesta al impulso y al escalon
+
+G = TransferFunction(numerador, denominador)
+
+# Calculamos la respuesta al impulso
+t_impulso, y_impulso = impulse(G, T=t)
+
+# Calculamos la respuesta al escalón
+t_escalon, y_escalon = step(G, T=t)
+
+# ==========================================
+# Gráficas de las respuestas temporales
+# ==========================================
+
+fig, axes = plt.subplots(1, 2, figsize=(13, 5))
+
+# Respuesta al impulso
+axes[0].plot(
+    t_impulso, y_impulso,
+    color='blue',
+    linewidth=2
+)
+
+axes[0].set_title('Respuesta al Impulso')
+axes[0].set_xlabel('Tiempo (min)')
+axes[0].set_ylabel('Respuesta de C')
+axes[0].grid(True, alpha=0.3)
+
+# Respuesta al escalón
+axes[1].plot(
+    t_escalon, y_escalon,
+    color='red',
+    linewidth=2
+)
+
+axes[1].set_title('Respuesta al Escalón')
+axes[1].set_xlabel('Tiempo (min)')
+axes[1].set_ylabel('Respuesta de C')
+axes[1].grid(True, alpha=0.3)
+
+plt.suptitle('Respuestas Temporales del Sistema Linealizado')
 plt.tight_layout()
 plt.show()
 
