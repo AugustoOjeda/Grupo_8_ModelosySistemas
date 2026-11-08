@@ -209,6 +209,64 @@ ax.scatter(
     label='Inicio 6'
 )
 
+
+# Puntos finales de las trayectorias
+
+
+ax.scatter(
+    sol.y[0, -1], sol.y[1, -1], sol.y[2, -1],
+    color='b',
+    marker='s',
+    s=70,
+    label='Final 1'
+)
+
+
+ax.scatter(
+    sol2.y[0, -1], sol2.y[1, -1], sol2.y[2, -1],
+    color='g',
+    marker='s',
+    s=70,
+    label='Final 2'
+)
+
+
+ax.scatter(
+    sol3.y[0, -1], sol3.y[1, -1], sol3.y[2, -1],
+    color='r',
+    marker='s',
+    s=70,
+    label='Final 3'
+)
+
+
+ax.scatter(
+    sol4.y[0, -1], sol4.y[1, -1], sol4.y[2, -1],
+    color='orchid',
+    marker='s',
+    s=70,
+    label='Final 4'
+)
+
+
+ax.scatter(
+    sol5.y[0, -1], sol5.y[1, -1], sol5.y[2, -1],
+    color='purple',
+    marker='s',
+    s=70,
+    label='Final 5'
+)
+
+
+ax.scatter(
+    sol6.y[0, -1], sol6.y[1, -1], sol6.y[2, -1],
+    color='darkmagenta',
+    marker='s',
+    s=70,
+    label='Final 6'
+)
+
+
 # Punto de equilibrio
 ax.scatter(
     Solucion_1.x[0], Solucion_1.x[1], Solucion_1.x[2],
@@ -225,6 +283,7 @@ ax.scatter(
     s=150,
     label='Punto de Equilibrio -15.71352298 835.67614889   2'
 )
+
 
 ax.set_xlabel('C (Concentración)')
 ax.set_ylabel('M (Masa Acumulada)')
