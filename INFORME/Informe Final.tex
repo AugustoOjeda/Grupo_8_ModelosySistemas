@@ -1,0 +1,1092 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Keep aspect ratio if custom image width or height is specified
+    \setkeys{Gin}{keepaspectratio}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+
+    \usepackage{iftex}
+    \ifPDFTeX
+        \usepackage[T1]{fontenc}
+        \IfFileExists{alphabeta.sty}{
+              \usepackage{alphabeta}
+          }{
+              \usepackage[mathletters]{ucs}
+              \usepackage[utf8x]{inputenc}
+          }
+    \else
+        \usepackage{fontspec}
+        \usepackage{unicode-math}
+    \fi
+
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics
+                         % to support a larger range
+    \makeatletter % fix for old versions of grffile with XeLaTeX
+    \@ifpackagelater{grffile}{2019/11/01}
+    {
+      % Do nothing on new versions
+    }
+    {
+      \def\Gread@@xetex#1{%
+        \IfFileExists{"\Gin@base".bb}%
+        {\Gread@eps{\Gin@base.bb}}%
+        {\Gread@@xetex@aux#1}%
+      }
+    }
+    \makeatother
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage{array}     % table support for pandoc >= 2.11.3
+    \usepackage{calc}      % table minipage width calculation for pandoc >= 2.11.1
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{soul}      % strikethrough (\st) support for pandoc >= 3.0.0
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % common color for the border for error outputs.
+    \definecolor{outerrorbackground}{HTML}{FFDFDF}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \makeatletter
+    \newsavebox\pandoc@box
+    \newcommand*\pandocbounded[1]{%
+      \sbox\pandoc@box{#1}%
+      % scaling factors for width and height
+      \Gscale@div\@tempa\textheight{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+      \Gscale@div\@tempb\linewidth{\wd\pandoc@box}%
+      % select the smaller of both
+      \ifdim\@tempb\p@<\@tempa\p@
+        \let\@tempa\@tempb
+      \fi
+      % scaling accordingly (\@tempa < 1)
+      \ifdim\@tempa\p@<\p@
+        \scalebox{\@tempa}{\usebox\pandoc@box}%
+      % scaling not needed, use as it is
+      \else
+        \usebox{\pandoc@box}%
+      \fi
+    }
+    \makeatother
+
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{Modelos y Sistemas - Trabajo Final}
+    
+    
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\@namedef{PY@tok@w}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\@namedef{PY@tok@c}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cp}{\def\PY@tc##1{\textcolor[rgb]{0.61,0.40,0.00}{##1}}}
+\@namedef{PY@tok@k}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kt}{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\@namedef{PY@tok@o}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ow}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@nb}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nf}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@nn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@ne}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.80,0.25,0.22}{##1}}}
+\@namedef{PY@tok@nv}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@no}{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\@namedef{PY@tok@nl}{\def\PY@tc##1{\textcolor[rgb]{0.46,0.46,0.00}{##1}}}
+\@namedef{PY@tok@ni}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@na}{\def\PY@tc##1{\textcolor[rgb]{0.41,0.47,0.13}{##1}}}
+\@namedef{PY@tok@nt}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@nd}{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\@namedef{PY@tok@s}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sd}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@si}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@se}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.36,0.12}{##1}}}
+\@namedef{PY@tok@sr}{\def\PY@tc##1{\textcolor[rgb]{0.64,0.35,0.47}{##1}}}
+\@namedef{PY@tok@ss}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sx}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@m}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@gh}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gu}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\@namedef{PY@tok@gd}{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\@namedef{PY@tok@gi}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.52,0.00}{##1}}}
+\@namedef{PY@tok@gr}{\def\PY@tc##1{\textcolor[rgb]{0.89,0.00,0.00}{##1}}}
+\@namedef{PY@tok@ge}{\let\PY@it=\textit}
+\@namedef{PY@tok@gs}{\let\PY@bf=\textbf}
+\@namedef{PY@tok@ges}{\let\PY@bf=\textbf\let\PY@it=\textit}
+\@namedef{PY@tok@gp}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\@namedef{PY@tok@go}{\def\PY@tc##1{\textcolor[rgb]{0.44,0.44,0.44}{##1}}}
+\@namedef{PY@tok@gt}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\@namedef{PY@tok@err}{\def\PY@bc##1{{\setlength{\fboxsep}{\string -\fboxrule}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}}
+\@namedef{PY@tok@kc}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kd}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kn}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@kr}{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@bp}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\@namedef{PY@tok@fm}{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\@namedef{PY@tok@vc}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vg}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vi}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@vm}{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\@namedef{PY@tok@sa}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sb}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sc}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@dl}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s2}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@sh}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@s1}{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\@namedef{PY@tok@mb}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mf}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mh}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mi}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@il}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@mo}{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\@namedef{PY@tok@ch}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cm}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cpf}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@c1}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+\@namedef{PY@tok@cs}{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.24,0.48,0.48}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb.
+    \makeatletter
+        \newbox\Wrappedcontinuationbox
+        \newbox\Wrappedvisiblespacebox
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}}
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}}
+        \newcommand*\Wrappedcontinuationindent {3ex }
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox}
+        % Take advantage of the already applied Pygments mark-up to insert
+        % potential linebreaks for TeX processing.
+        %        {, <, #, %, $, ' and ": go to next line.
+        %        _, }, ^, &, >, - and ~: stay at end of broken line.
+        % Use of \textquotesingle for straight quote.
+        \newcommand*\Wrappedbreaksatspecials {%
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}%
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}%
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}%
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}%
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}%
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}%
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}%
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}%
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}%
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}%
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}%
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}%
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}%
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}%
+        }
+        % Some characters . , ; ? ! / are not pygmentized.
+        % This macro makes them "active" and they will insert potential linebreaks
+        \newcommand*\Wrappedbreaksatpunct {%
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}%
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}%
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}%
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}%
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}%
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}%
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}%
+            \catcode`\.\active
+            \catcode`\,\active
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active
+            \lccode`\~`\~
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        {\ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+\begin{document}
+    
+    \maketitle
+    
+    
+
+    
+    \begin{figure}
+\centering
+\pandocbounded{\includegraphics[keepaspectratio,alt={Logo portada}]{Informe Final_files/image1.jpg}}
+\caption{Logo portada}
+\end{figure}
+
+    MODELOS Y SISTEMAS
+
+TRABAJO FINAL
+
+Modelo de contaminante en reactor
+
+Autores:
+
+Ballan, NicolePantozzi, JeremíasOjeda, Augusto
+
+Docentes:
+
+Rubio DianaSoria Paula RominaLa Mura Guillermo
+
+Noviembre 2026
+
+    \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\pandocbounded{\includegraphics[keepaspectratio,alt={Logo encabezado}]{Informe Final_files/image1.jpg}}\textbf{Modelo
+de contaminante en reactor}Ballan Nicole, Pantozzi Jeremías, Ojeda
+Augusto & Noviembre, 2026 \\
+\end{longtable}
+}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+    Modelo de contaminante en reactor
+
+Ballan Nicole; Pantozzi Jeremías; Ojeda Augusto
+
+Escuela de Ciencia y Tecnología, Universidad Nacional de San Martín, 25
+de Mayo y Francia,1650 San Martín, Buenos Aires, Argentina
+correo@autor1.com, jmpantozzi@estudiantes.unsam.edu.ar,
+agojeda@estudiantes.unsam.edu.ar
+
+    \textbf{Resumen:} En el presente trabajo se estudia un modelo matemático
+utilizado para describir la biodegradación de contaminantes en recursos
+hídricos, fundamentado en el principio de conservación de la materia e
+incorporando una cinética saturable de tipo Michaelis-Menten. Mediante
+herramientas numéricas implementadas en Python, se analiza el sistema no
+lineal y su linealización alrededor de un punto de equilibrio, con el
+objetivo de determinar la evolución temporal de la concentración, la
+masa acumulada y la fuente contaminante. Se calculan los puntos de
+equilibrio, se evalúa su estabilidad mediante los autovalores de la
+matriz jacobiana y se comparan las simulaciones temporales de ambos
+modelos. Además, se obtiene la función de transferencia para estudiar la
+respuesta de la concentración frente a perturbaciones externas,
+incluyendo las respuestas al impulso y al escalón. Los resultados
+indican estabilidad matemática local del modelo, aunque ambos
+equilibrios presentan valores negativos en alguna variable, lo que
+limita su interpretación física.
+
+Palabras claves: \textbf{\emph{Contaminantes ambientales, Recursos
+hídricos, Biodegradación, Python, Linealización, Función de
+transferencia.}}
+
+    \subsection{1. Introducción}\label{introducciuxf3n}
+
+La incorporación de contaminantes a los sistemas acuáticos, como
+consecuencia de actividades humanas o eventos accidentales, constituye
+una problemática ambiental que puede afectar significativamente la
+calidad del agua. El estudio de los mecanismos de transporte,
+transformación y eliminación de estas sustancias resulta fundamental
+para comprender su comportamiento y predecir su evolución temporal. En
+este contexto, los modelos matemáticos permiten representar de manera
+simplificada los procesos involucrados y analizar la respuesta del
+sistema ante diferentes condiciones.
+
+Para abordar esta problemática, se considera un reactor perfectamente
+mezclado de volumen constante, en el cual un contaminante es
+transportado mediante flujos de entrada y salida, eliminado a través de
+procesos de degradación biológica y aportado por una fuente variable en
+el tiempo. La formulación se fundamenta en el principio de conservación
+de la materia, aplicado al transporte de contaminantes en medios
+acuáticos, tomando como referencia los desarrollos de Fischer et
+al.~(1979). Este principio se expresa mediante el siguiente balance
+general:
+
+\[
+\boxed{\text{Acumulación}=\text{Entrada}-\text{Salida}+\text{Generación}-\text{Eliminación}}
+\tag{1}
+\]
+
+Considerando una concentración uniforme en el reactor, la masa disuelta
+del contaminante puede expresarse como \(m_C=VC\), donde \(V\)
+representa el volumen del reactor y \(C\) la concentración. Si
+inicialmente se supone una eliminación de primer orden, caracterizada
+por una constante \(k\), el balance de materia adopta la forma:
+
+\[
+\frac{d(VC)}{dt}=QC_{\mathrm{in}}-QC+VS-kVC
+\tag{2}
+\]
+
+donde \(Q\) representa el caudal volumétrico, \(C_{\mathrm{in}}\) la
+concentración del flujo de entrada y \(S\) una fuente interna de
+contaminante por unidad de volumen.
+
+Sin embargo, la hipótesis de eliminación de primer orden supone que la
+velocidad de degradación aumenta proporcionalmente con la concentración,
+comportamiento que puede resultar insuficiente cuando la eliminación
+depende de microorganismos cuya capacidad de degradación es limitada.
+Por este motivo, se adopta una cinética saturable de tipo
+Michaelis-Menten, utilizada para describir procesos de biodegradación
+{[}1, 2{]}:
+
+\[
+r_d(C)=\frac{K_{\max}C}{K_m+C}
+\tag{3}
+\]
+
+En esta expresión, \(K_{\max}\) representa la velocidad máxima de
+degradación por unidad de volumen y \(K_m\) la constante de
+semisaturación. Para concentraciones considerablemente menores que
+\(K_m\), la expresión puede aproximarse mediante una cinética de primer
+orden, estableciendo la relación \(K_{\max}=kK_m\). De esta manera, se
+reemplaza el término de eliminación lineal por una formulación no lineal
+que contempla la saturación del proceso biológico.
+
+A partir de estas consideraciones, el comportamiento dinámico del
+reactor se describe mediante tres variables de estado: la concentración
+del contaminante \(C(t)\), la masa acumulada \(M(t)\) y la intensidad de
+la fuente contaminante \(S(t)\). El sistema de ecuaciones diferenciales
+propuesto es:
+
+\[
+\begin{aligned}
+\dot C &= -\frac{Q}{V}C-\frac{K_{\max}C}{K_m+C}+S\\[6pt]
+\dot M &= Q(C_{\mathrm{in}}-C)-k_rM\\[6pt]
+\dot S &= -\lambda S+u(t)
+\end{aligned}
+\tag{4}
+\]
+
+\begin{itemize}
+\item
+  La primera ecuación describe la evolución de la concentración
+  considerando la salida del contaminante, su degradación biológica y el
+  aporte de la fuente interna.
+\item
+  La segunda representa la evolución de la variable de masa acumulada,
+  incluyendo los intercambios asociados al caudal y un término de
+  eliminación de primer orden.
+\item
+  La tercera ecuación caracteriza el decaimiento de la fuente
+  contaminante mediante la constante \(\lambda\), incorporando una
+  entrada externa \(u(t)\) que permite representar aportes adicionales o
+  perturbaciones sobre el sistema.
+\end{itemize}
+
+A partir del modelo propuesto, se busca caracterizar su comportamiento
+dinámico mediante la determinación de los puntos de equilibrio y el
+análisis de su estabilidad. Para ello, se realizarán simulaciones
+numéricas bajo diferentes condiciones iniciales y se obtendrá un modelo
+linealizado alrededor de un punto de equilibrio. Finalmente, se
+compararán las respuestas temporales y los diagramas de fase de ambos
+modelos, y se estudiará su respuesta ante perturbaciones externas
+mediante el análisis de la función de transferencia.
+
+    \subsection{2. Materiales y Métodos}\label{materiales-y-muxe9todos}
+
+Para el análisis del comportamiento dinámico del sistema se utilizó el
+lenguaje de programación \textbf{Python}, trabajando en el entorno
+\textbf{Jupyter Notebook}, que permite integrar desarrollos matemáticos,
+cálculos numéricos y representaciones gráficas. La implementación
+computacional se realizó mediante las siguientes bibliotecas:
+
+\begin{itemize}
+\item
+  \textbf{NumPy:} se utilizó para el manejo de vectores y matrices, el
+  cálculo de autovalores, la manipulación de polinomios y la generación
+  de arreglos numéricos necesarios para las simulaciones.
+\item
+  \textbf{SciPy:} permitió implementar diferentes herramientas de
+  análisis numérico. Se empleó \texttt{scipy.optimize.root} para
+  determinar los puntos de equilibrio del sistema,
+  \texttt{scipy.integrate.solve\_ivp} para resolver numéricamente las
+  ecuaciones diferenciales y \texttt{scipy.signal} para obtener la
+  función de transferencia y calcular las respuestas al impulso y al
+  escalón.
+\item
+  \textbf{Matplotlib:} se utilizó para representar gráficamente las
+  soluciones temporales, los diagramas de fase bidimensionales y
+  tridimensionales, los polos y ceros de la función de transferencia y
+  las respuestas dinámicas del sistema. Adicionalmente, se empleó
+  \texttt{inset\_axes} para ampliar regiones de interés en las
+  representaciones gráficas.
+\end{itemize}
+
+A partir de estas herramientas se desarrolló el análisis del modelo no
+lineal y su posterior linealización, estudiando los puntos de
+equilibrio, la estabilidad y la evolución temporal del sistema frente a
+distintas condiciones iniciales. Los procedimientos empleados se
+describen a continuación.
+
+    \subsubsection{2.1. Parámetros y condiciones de
+simulación}\label{paruxe1metros-y-condiciones-de-simulaciuxf3n}
+
+Para el estudio del modelo no lineal presentado en la ecuación (4), se
+adoptaron los parámetros y condiciones iniciales que se detallan a
+continuación. La formulación se fundamenta en los principios de
+transporte y conservación de materia desarrollados por Fischer et
+al.~(1979), mientras que los trabajos de Shetty y Shetty (2016) {[}1{]}
+y Lv et al.~(2022) {[}2{]} se tomaron como antecedentes para la
+descripción de los procesos de biodegradación.
+
+Los valores utilizados permiten caracterizar el comportamiento dinámico
+del reactor y realizar las simulaciones numéricas correspondientes.
+
+\textbf{Condiciones iniciales:}
+
+\[
+C(0)=0.5\ \mathrm{mg\,L^{-1}}, \qquad
+M(0)=1\ \mathrm{mg}, \qquad
+S(0)=0.5\ \mathrm{mg\,L^{-1}\,min^{-1}}
+\]
+
+\textbf{Tabla 1. Parámetros utilizados en el modelo.}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2632}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2632}}
+  >{\centering\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2632}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2105}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+Parámetro
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Valor
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+Unidad
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Descripción
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(Q\) & 1 & \(\mathrm{L\,min^{-1}}\) & Caudal de entrada y salida \\
+\(V\) & 10 & \(\mathrm{L}\) & Volumen del reactor \\
+\(C_{\mathrm{in}}\) & 1 & \(\mathrm{mg\,L^{-1}}\) & Concentración de
+entrada \\
+\(K_{\max}\) & 0.644 & \(\mathrm{mg\,L^{-1}\,min^{-1}}\) & Velocidad
+máxima de degradación biológica \\
+\(K_m\) & 12.88 & \(\mathrm{mg\,L^{-1}}\) & Constante de
+semisaturación \\
+\(k_r\) & 0.02 & \(\mathrm{min^{-1}}\) & Constante de remoción de
+masa \\
+\(\lambda\) & 0.1 & \(\mathrm{min^{-1}}\) & Constante de decaimiento de
+la fuente \\
+\end{longtable}
+}
+
+Para la resolución numérica del sistema se consideró un intervalo
+temporal de \(0\) a \(100\) minutos, seleccionando \(N=5000\) instantes
+de evaluación equiespaciados. Asimismo, se adoptó una entrada externa
+constante \(u(t)\), con el propósito de estudiar el comportamiento del
+reactor bajo un aporte sostenido a la fuente contaminante.
+
+\textbf{Condiciones de simulación:}
+
+\[
+t\in[0,100]\ \mathrm{min}, \qquad N=5000
+\]
+
+\[
+u(t)=0.2\ \mathrm{mg\,L^{-1}\,min^{-2}}
+\]
+
+    \subsubsection{2.2. Puntos de equilibrio y sistema
+linealizado}\label{puntos-de-equilibrio-y-sistema-linealizado}
+
+\paragraph{Determinación de los puntos de
+equilibrio}\label{determinaciuxf3n-de-los-puntos-de-equilibrio}
+
+Para determinar los puntos de equilibrio del modelo no lineal presentado
+en la ecuación (4), se igualaron a cero las tres ecuaciones
+diferenciales del sistema, considerando una entrada externa constante
+\(u(t)=0.2\).
+
+\[
+\begin{aligned}
+0 &= -\frac{Q}{V}C^*-\frac{K_{\max}C^*}{K_m+C^*}+S^*\\[4pt]
+0 &= Q(C_{\mathrm{in}}-C^*)-k_rM^*\\[4pt]
+0 &= -\lambda S^*+u(t)
+\end{aligned}
+\tag{5}
+\]
+
+Donde \(C^*\), \(M^*\) y \(S^*\) representan los valores de las
+variables de estado en el equilibrio.
+
+Despejando \(S^*\) de la tercera ecuación y sustituyendo en la primera,
+se obtiene una expresión que puede reorganizarse como una ecuación
+cuadrática para la concentración de equilibrio:
+
+\[
+\frac{Q}{V}(C^*)^2+
+\left(\frac{QK_m}{V}+K_{\max}-S^*\right)C^*
+-S^*K_m=0
+\tag{6}
+\]
+
+Por lo tanto, para los parámetros considerados, el sistema presenta dos
+puntos de equilibrio matemáticos.
+
+Para determinar numéricamente ambos puntos se utilizó la función
+\texttt{root} de la biblioteca \texttt{scipy.optimize}, que permite
+encontrar las raíces de un sistema de ecuaciones no lineales. Se
+emplearon dos estimaciones iniciales diferentes, con el objetivo de
+obtener ambas soluciones.
+
+\paragraph{Linealización del
+sistema}\label{linealizaciuxf3n-del-sistema}
+
+Para estudiar el comportamiento del sistema en las proximidades de un
+punto de equilibrio, se realizó una linealización mediante una
+aproximación de Taylor de primer orden.
+
+Considerando el vector de estado \(\mathbf{x}=[C,M,S]^T\), el sistema
+linealizado alrededor de un punto de equilibrio \(\mathbf{x}^*\), para
+una entrada externa constante, se expresa como:
+
+\[
+\dot{\mathbf{x}}=A(\mathbf{x}-\mathbf{x}^*) + u(t)
+\tag{7}
+\]
+
+Donde \(A\) es la matriz jacobiana del sistema no lineal evaluada en el
+punto de equilibrio seleccionado.
+
+La matriz jacobiana se obtiene calculando las derivadas parciales de
+cada ecuación diferencial respecto de las variables de estado:
+
+\[
+J(C,M,S)=
+\begin{pmatrix}
+-\dfrac{Q}{V}-\dfrac{K_{\max}K_m}{(K_m+C)^2} & 0 & 1\\[8pt]
+-Q & -k_r & 0\\[4pt]
+0 & 0 & -\lambda
+\end{pmatrix}
+\tag{8}
+\]
+
+Para realizar la linealización se seleccionó el primer punto de
+equilibrio obtenido numéricamente:
+
+\[
+\mathbf{x}^*=
+\begin{pmatrix}
+16.39352\\
+-769.67615\\
+2
+\end{pmatrix}
+\]
+
+Evaluando la matriz jacobiana en este punto, se obtiene:
+
+\[
+A=J(\mathbf{x}^*)=
+\begin{pmatrix}
+-0.10967947 & 0 & 1\\
+-1 & -0.02 & 0\\
+0 & 0 & -0.1
+\end{pmatrix}
+\tag{9}
+\]
+
+Finalmente, sustituyendo la matriz \(A\) y los valores del equilibrio en
+la ecuación (7), se obtiene el sistema linealizado:
+
+\[
+\begin{aligned}
+\dot C &= -0.10968(C-16.39352)+(S-2)\\[4pt]
+\dot M &= -(C-16.39352)-0.02(M+769.67615)\\[4pt]
+\dot S &= -0.1(S-2) + u(t)
+\end{aligned}
+\tag{10}
+\]
+
+Este sistema permite aproximar el comportamiento del modelo no lineal en
+las proximidades del punto de equilibrio seleccionado. Para analizar su
+estabilidad local, se calcularon los autovalores de la matriz jacobiana
+\(A\) mediante la función \texttt{numpy.linalg.eigvals}.
+
+    \subsubsection{2.3. Función de
+transferencia}\label{funciuxf3n-de-transferencia}
+
+Para analizar la respuesta dinámica del sistema ante perturbaciones
+externas, se determinó la función de transferencia del modelo
+linealizado. Se consideró como entrada la variación de la fuente externa
+\(u(t)\) y como salida la concentración del contaminante \(C(t)\),
+debido al interés en estudiar cómo los cambios en el aporte de
+contaminantes afectan su concentración dentro del reactor.
+
+Para obtener la función de transferencia se aplica la transformada de
+Laplace al sistema linealizado, considerando condiciones iniciales nulas
+para las variables de perturbación. La relación entre la entrada y la
+salida queda definida por:
+
+\[
+H(s)=\frac{\Delta C(s)}{\Delta U(s)}
+\tag{12}
+\]
+
+A partir de las ecuaciones correspondientes a \(C\) y \(S\), se obtiene:
+
+\[
+\begin{aligned}
+s\Delta C(s)&=-a\Delta C(s)+\Delta S(s)\\
+s\Delta S(s)&=-\lambda\Delta S(s)+\Delta U(s)
+\end{aligned}
+\]
+
+donde \(a=-A_{11}=0.10967947\) y \(\lambda=-A_{33}=0.1\). Despejando y
+combinando ambas expresiones, se obtiene la función de transferencia:
+
+\[
+\boxed{
+H(s)=\frac{1}{(s+a)(s+\lambda)}
+=\frac{1}{s^2+0.20967947s+0.01096795}
+}
+\tag{13}
+\]
+
+Para su implementación numérica en Python, se utilizaron los
+coeficientes de la matriz jacobiana evaluada. El numerador se definió
+mediante el elemento \(A_{13}\), mientras que el denominador se
+construyó multiplicando los polinomios \((s+a)\) y \((s+\lambda)\)
+mediante la función \texttt{numpy.polymul}.
+
+Posteriormente, se empleó la función \texttt{numpy.roots} para calcular
+las raíces de los polinomios del numerador y denominador,
+correspondientes a los ceros y polos de la función de transferencia,
+respectivamente.
+
+Finalmente, mediante las funciones \texttt{TransferFunction},
+\texttt{impulse} y \texttt{step} de la biblioteca \texttt{scipy.signal},
+se construyó la representación del sistema y se calcularon sus
+respuestas temporales ante entradas de tipo impulso y escalón, con el
+objetivo de caracterizar su comportamiento dinámico frente a
+perturbaciones externas.
+
+    \subsection{3. Experimentos numéricos}\label{experimentos-numuxe9ricos}
+
+Con las funciones \texttt{Root} se llego a los puntos de equilibrio, a
+partir de los mismos se realizaron las simulaciones temporales de fase y
+de respuesta temporal, asi como la linealizacion al rededor del punto
+P.E. 1
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+=== PUNTOS DE EQUILIBRIO ===
+P.E. 1: [  16.39352298 -769.67614889    2.        ]
+P.E. 2: [-15.71352298 835.67614889   2.        ]
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Jacobiano evaluado en el punto
+[[-0.10967947  0.          1.        ]
+ [-1.         -0.02        0.        ]
+ [ 0.          0.         -0.1       ]]
+
+=== ECUACIONES LINEALIZADAS ===
+C\_der = -0.10968*(C - (16.39352)) + (S - (2.00000))
+M\_der = -1.00000*(C - (16.39352)) + -0.02000*(M - (-769.67615))
+S\_der = -0.10000*(S - (2.00000))
+
+=== Calculo de autovalores ===
+λ1 = -0.02, λ2 = -0.10967947376878395, λ3 = -0.1
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Informe Final_files/Informe Final_13_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Informe Final_files/Informe Final_14_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Informe Final_files/Informe Final_15_0.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+Ignoring fixed y limits to fulfill fixed data aspect with adjustable data
+limits.
+C:\textbackslash{}Users\textbackslash{}jerem\textbackslash{}AppData\textbackslash{}Local\textbackslash{}Temp\textbackslash{}ipykernel\_12096\textbackslash{}2671067970.py:81: UserWarning:
+This figure includes Axes that are not compatible with tight\_layout, so results
+might be incorrect.
+  plt.tight\_layout()
+Ignoring fixed x limits to fulfill fixed data aspect with adjustable data
+limits.
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+=== POLOS Y CEROS ===
+Numerador: [1.]
+Denominador: [1.         0.20967947 0.01096795]
+Polos: [-0.10967947 -0.1       ]
+Ceros: []
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Informe Final_files/Informe Final_16_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{Informe Final_files/Informe Final_16_3.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \subsection{4. Análisis y Discusión}\label{anuxe1lisis-y-discusiuxf3n}
+
+\paragraph{4.1. Sistema no linealizado}\label{sistema-no-linealizado}
+
+Los dos puntos de equilibrio obtenidos presentan limitaciones desde el
+punto de vista físico, dado que uno de ellos presenta una concentración
+negativa y el otro una masa acumulada negativa. Estas magnitudes
+representan cantidades físicas que deben satisfacer \(C\geq 0\) y
+\(M\geq 0\).
+
+Por otra parte, en la Figura 2 se observa que las trayectorias simuladas
+a partir de condiciones iniciales físicamente posibles presentan una
+tendencia hacia el primer punto de equilibrio,
+\([C=16.393;\ M=-769.676;\ S=2]\).
+
+Aunque dicho equilibrio no es completamente admisible físicamente debido
+al valor negativo de la masa, fue seleccionado para continuar con el
+análisis matemático del sistema, mientras que el segundo punto fue
+descartado por presentar una concentración negativa y por la tendencia
+del gráfico mencionado.
+
+\paragraph{4.2. Sistema linealizado}\label{sistema-linealizado}
+
+Al analizar los autovalores de la matriz jacobiana evaluada en el punto
+de equilibrio seleccionado, se observa que los tres son reales y
+negativos. Esto permite clasificar al equilibrio como un nodo
+asintóticamente estable.
+
+Este comportamiento se representa en la Figura 1 mediante los retratos
+de fase bidimensionales del sistema linealizado. En ellos se observa
+cómo las trayectorias convergen hacia el origen de coordenadas, que
+corresponde al punto de equilibrio debido al desplazamiento y
+normalización de las variables de estado.
+
+\paragraph{4.3. Comparación de las soluciones
+temporales}\label{comparaciuxf3n-de-las-soluciones-temporales}
+
+En las Figuras 2 y 3 se presentan las soluciones temporales del modelo
+no lineal y del modelo linealizado, respectivamente.
+
+Se observa que ambos modelos presentan un comportamiento dinámico
+similar, con trayectorias que tienden hacia el punto de equilibrio
+seleccionado. Este resultado es consistente con el análisis de
+estabilidad realizado previamente. Asimismo, en las Figuras 4 y 5 se
+representa este comportamiento mediante los diagramas de fase
+tridimensionales, considerando las variables de estado \(C\), \(M\) y
+\(S\).
+
+Sin embargo, las respuestas no son idénticas. Las principales
+diferencias se presentan durante el régimen transitorio, especialmente
+en los valores máximos alcanzados por la concentración \(C(t)\) y en la
+evolución de la masa acumulada \(M(t)\). Para condiciones iniciales
+iguales, estas diferencias se deben a que el modelo linealizado
+constituye una aproximación de primer orden del sistema original, cuya
+precisión es mayor en las proximidades del punto de equilibrio.
+
+Por otra parte, la variable \(S(t)\) presenta un comportamiento
+coincidente en ambos modelos cuando se consideran las mismas condiciones
+iniciales, debido a que su ecuación diferencial ya es lineal y no se
+modifica mediante el proceso de linealización.
+
+Finalmente, se observa que la concentración y la fuente contaminante se
+aproximan a sus respectivos valores de equilibrio dentro del intervalo
+simulado, mientras que la masa acumulada presenta una evolución más
+lenta. Esto es consistente con el autovalor \(\lambda_1=-0.02\),
+asociado a una dinámica de mayor escala temporal.
+
+\paragraph{4.4. Analisís de Función
+Transferencia}\label{analisuxeds-de-funciuxf3n-transferencia}
+
+En la Figura 6 se presenta el mapa de polos y ceros de la función de
+transferencia obtenida para el modelo linealizado. Se observa que ambos
+polos se encuentran en el semiplano izquierdo del plano complejo, lo que
+indica que la relación entrada-salida analizada es estable. Este
+resultado es consistente con el análisis de estabilidad realizado
+previamente.
+
+En la Figura 7 se representa la respuesta al impulso, en la cual se
+observa un aumento inicial de la concentración, seguido de una
+disminución progresiva hasta aproximarse nuevamente a cero en términos
+de perturbación respecto del equilibrio.
+
+Por otra parte, en la Figura 8 se presenta la respuesta al escalón, que
+muestra un incremento progresivo de la concentración hasta aproximarse a
+un nuevo valor estacionario.
+
+    \subsection{5. Conclusiones}\label{conclusiones}
+
+A partir de los análisis realizados, se logró caracterizar el
+comportamiento dinámico del modelo matemático propuesto para el estudio
+de los mecanismos de transporte, transformación y eliminación de
+sustancias contaminantes en recursos hidricos. El modelo, fudamentado en
+el principio de conservación de la materia y adoptando una cinética
+saturable del tipo Michaelis-Menten, tomando como referencia los
+desarrollos de Fischer (1979), Shetty (2016) y Wang-Liu-Chen-Zhang
+(2022), permitió estudiar los puntos de equilibrio, la estabilidad y la
+respuesta del sistema frente a diferentes condiciones iniciales y
+perturbaciones externas.
+
+Como primer resultado determinante se identifico la limitación fisica
+del modelo matematico, dado que ambos puntos de equilibrio presentan
+valores negativos de concentración o masa acumulada, magnitudes que no
+resultan físicamente admisibles. Si bien se comprobó matemáticamente la
+estabilidad asintótica del equilibrio seleccionado y la convergencia de
+las trayectorias hacia dicho punto, estos resultados no permiten
+asegurar un comportamiento físicamente válido del reactor.
+
+Por otra parte, se verificó que el sistema puede linealizarse alrededor
+del punto de equilibrio seleccionado. El modelo linealizado permitió
+reproducir cualitativamente el comportamiento del sistema no lineal,
+especialmente en las proximidades del equilibrio.
+
+Finalmente, el análisis de la función de transferencia permitió
+caracterizar la respuesta del sistema linealizado ante perturbaciones
+externas: * La relación entrada-salida analizada es estable, dado que
+sus polos se encuentran en el semiplano izquierdo del plano complejo. *
+El efecto de una perturbación impulsiva es transitorio y desaparece con
+el tiempo. * La respuesta al escalón, muestra un incremento progresivo
+de la concentración sin oscilaciones y con un valor final finito.
+
+    \subsection{6. Referencias}\label{referencias}
+
+{[}1{]} Shetty, G. R., y Shetty, V. K., \emph{Pathway identification,
+enzyme activity and kinetic study for the biodegradation of phenol by
+Nocardia hydrocarbonoxydans NCIM 2386}, Desalination and Water
+Treatment, 57(19) (2016), pp.~8789--8801. DOI:
+10.1080/19443994.2015.1030700.
+
+{[}2{]} Lv, Y., Wang, L., Liu, X., Chen, B., y Zhang, M.,
+\emph{Degradation kinetics of aromatic VOCs polluted wastewater by
+functional bacteria at laboratory scale}, Scientific Reports, 12 (2022),
+artículo 19053, pp.~1--9. DOI: 10.1038/s41598-022-21356-4.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+[NbConvertApp] Converting notebook MyS\_Trabajo\_Final\_Jupyter.ipynb to latex
+[NbConvertApp] Support files will be in Informe Final\_files\textbackslash{}
+[NbConvertApp] Making directory Informe Final\_files
+[NbConvertApp] Writing 55036 bytes to Informe Final.tex
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+\end{document}
