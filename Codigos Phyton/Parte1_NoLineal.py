@@ -42,11 +42,11 @@ C_0=0.5 #mg L^-1
 M_0=1 #mg
 S_0=0.5 #mg L^-1 min^-1
 C_iniciales=[C_0,M_0,S_0]
-C_inicialesbis=[30,-500,10]
-C_inicialesbis2=[15,-700,25]
-C_Inicialeseq2_0=[-40, 700, 1]
-C_Inicialeseq2_1=[-15, -399, 0]
-C_Inicialeseq2_2=[-20, 1500, -18]
+C_inicialesbis=[30,500,10]
+C_inicialesbis2=[15,700,25]
+C_Inicialeseq2_0=[40, 700, 1]
+C_Inicialeseq2_1=[15, 399, 0]
+C_Inicialeseq2_2=[20, 1500, -18]
 u=0.2 #mg min^-2
 
 
@@ -60,27 +60,24 @@ Solucion_2 = root(lambda y: modelo(0, y), [-16, 800, 2])
 print("=== PUNTOS DE EQUILIBRIO ===")
 print("Solución 1:", Solucion_1.x)
 print("Solución 2:", Solucion_2.x)
+
+
 #Variables de simulacion
 N=5000
 t_max=100
 t=np.linspace(0,t_max, N) #array de tiempo a paso de 0,02
 
-
 #Aplico ode para el primer punto de equilibrio
 sol = solve_ivp(modelo, (0, t_max), C_iniciales, t_eval=t) #En las condiciones inciales de la catedra
-
 sol2 = solve_ivp(modelo, (0, t_max), C_inicialesbis, t_eval=t)# En condiciones cercanas a las iniciales por debajo
-
 sol3 = solve_ivp(modelo, (0, t_max), C_inicialesbis2, t_eval=t) #En condiciones cercanas a las iniciales por encima
-
 #Aplico ode para el primer punto de equilibrio
-
 sol4= solve_ivp(modelo, (0, t_max), C_Inicialeseq2_0, t_eval=t)# En condiciones cercanas a al segundo punto de equilibrio 
 sol5= solve_ivp(modelo, (0, t_max), C_Inicialeseq2_1, t_eval=t)# En condiciones cercanas a al segundo punto de equilibrio
 sol6= solve_ivp(modelo, (0, t_max), C_Inicialeseq2_2, t_eval=t)# En condiciones cercanas a al segundo punto de equilibrio
 
 # ==========================================
-# Gráficas - Soluciones Temporales
+# Gráficas - Soluciones Temporales - Fase
 # ==========================================
 
 # Vamos a graficar las soluciones temporales solo para la condición inicial del enunciado (ci_1)
@@ -115,9 +112,9 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
-# ==========================================
-# Gráficas - Diagrama de Fase 3D
-# ==========================================
+# ===========================================
+# ====  Gráficas - Diagrama temporal 3D  ====
+# ===========================================
 
 fig = plt.figure(figsize=(15, 8))
 ax = fig.add_subplot(111, projection='3d')

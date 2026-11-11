@@ -60,11 +60,11 @@ S_0=0.5 #mg L^-1 min^-1
 C_iniciales=[C_0,M_0,S_0]
 u=0.2 #mg min^-2
 C_iniciales=[C_0,M_0,S_0]
-C_inicialesbis=[0,-500,0]
-C_inicialesbis2=[15,-700,5]
-C_Inicialeseq2_0=[-30, 700, 1]
-C_Inicialeseq2_1=[-15, -399, 0]
-C_Inicialeseq2_2=[-30, -700, -18]
+C_inicialesbis=[30,-500,10]
+C_inicialesbis2=[15,-700,25]
+C_Inicialeseq2_0=[40, 700, 1]
+C_Inicialeseq2_1=[15, -399, 0]
+C_Inicialeseq2_2=[20, 1500, -18]
 
 
 
@@ -101,7 +101,7 @@ print("\n=== Calculo de autovalores ===")
 print(f"λ1 = {autovalores[0]}, λ2 = {autovalores[1]}, λ3 = {autovalores[2]}")
 
 
-# Diagrama de fase 3D - Nodo sumidero
+# Diagrama temporal 3D - Linealizado
 
 # Tiempo de simulación
 t_fase = np.linspace(0, 300, 1000)
